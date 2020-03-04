@@ -1,0 +1,4 @@
+[Database]
+connection_string = 'sqlsrv:Server=localhost;Database=CDSSampleApp_Main';
+username = 'user';
+password = 'password';

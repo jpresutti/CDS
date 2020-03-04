@@ -11,6 +11,7 @@ class Database {
     public static function getInstance() : self {
         if ( static::$instance == null ) {
             static::$instance = new self();
+            (static::$instance)->connect();
         }
         return static::$instance;
     }
@@ -22,6 +23,8 @@ class Database {
         $password = $config->getSetting('Database.password');
         try {
             $this->connection = new PDO($connectionString, $username, $password);
+            $this->connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+    
         } catch (\PDOException $e) {
             echo 'Error connecting to Database: ' . $e->getMessage();
             return false;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use CDS\DataMappers\UserMapper;
 use CDS\DataModels\User;
-
+define('RUNASCLI',true);
 require_once (__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'baseline.php');
 $userMapper = new UserMapper();
 $user = $userMapper->getByUsername('Admin');

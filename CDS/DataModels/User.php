@@ -15,6 +15,7 @@ class User {
     }
     
     public function checkPassword(string $password) : bool {
-        return password_verify($password,$this->Password);
+        $valid = password_verify($password,$this->Password);
+        return $valid;
     }
 }

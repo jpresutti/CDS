@@ -36,7 +36,7 @@ class ContactHistory extends BaseController
             header('Location:/companies.php');
             exit;
         }
-        $history = $contactMapper->GetAuditLog($contact);
+        $history = $contactMapper->getAuditLog($contact);
         View::showView('contactHistory.phtml', ['company' => $company, 'contact' => $contact, 'contactHistory' => $history]);
     
     }

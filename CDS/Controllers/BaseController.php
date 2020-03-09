@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace CDS\Controllers;
 
+/**
+ * Class BaseController
+ *
+ * Abstract controller class - Run method is called from all public files
+ * @package CDS\Controllers
+ */
 abstract class BaseController {
     public function get() {
         throw new \Exception('Get not implemented');

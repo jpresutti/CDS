@@ -9,6 +9,11 @@ use CDS\DataModels\User;
 
 class UserMapper
 {
+    /**
+     * Gets user by username if one exists
+     * @param string $username
+     * @return User|null
+     */
     public function getByUsername(string $username) : ?User
     {
         $connection = Database::getInstance()->getConnection();
@@ -25,6 +30,11 @@ class UserMapper
         return null;
     }
     
+    /**
+     * Save user
+     * @param User $user
+     * @return User
+     */
     public function save(User $user) : User
     {
         $connection = Database::getInstance()->getConnection();

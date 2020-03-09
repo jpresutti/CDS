@@ -13,6 +13,11 @@ use CDS\UserSession;
 
 class ContactMapper
 {
+    /**
+     * Get by primary key
+     * @param $id
+     * @return Contact|null
+     */
     public function getByPrimary($id) : ?Contact
     {
         $connection = Database::getInstance()->getConnection();
@@ -29,6 +34,12 @@ class ContactMapper
         return null;
     }
     
+    /**
+     * Gets all contacts for a company
+     * @param Company $company
+     * @param bool $includeDeleted
+     * @return array
+     */
     public function getByCompany(Company $company, bool $includeDeleted = false) : array
     {
         $connection = Database::getInstance()->getConnection();
@@ -46,6 +57,11 @@ class ContactMapper
         return $return;
     }
     
+    /**
+     * Save company record
+     * @param Contact $contact
+     * @return Contact
+     */
     public function save(Contact $contact) : Contact
     {
         $connection = Database::getInstance()->getConnection();
@@ -80,7 +96,7 @@ class ContactMapper
                 
             ]) or die(var_dump($connection->errorCode()));
             $contact = $this->getByPrimary($connection->lastInsertId());
-            $this->AddAuditLog( $contact);
+            $this->addAuditLog( $contact);
     
         } else {
             $originalContact = $this->getByPrimary($contact->PRI);
@@ -113,13 +129,18 @@ class ContactMapper
                 $contact->Archived,
                 $contact->ID
             ]);
-            $this->AddAuditLog($originalContact, $contact);
+            $this->addAuditLog($originalContact, $contact);
         }
         
         return $contact;
     }
     
-    private function AddAuditLog(Contact $newContact, Contact $oldContact = null)
+    /**
+     * Add an audit log record - performed on all updates/inserts
+     * @param Contact $newContact
+     * @param Contact|null $oldContact
+     */
+    private function addAuditLog(Contact $newContact, Contact $oldContact = null)
     {
         $old = new \stdClass();
         $new = new \stdClass();
@@ -146,7 +167,12 @@ class ContactMapper
         ]);
     }
     
-    public function GetAuditLog(Contact $contact) : array
+    /**
+     * Get audit log details
+     * @param Contact $contact
+     * @return array
+     */
+    public function getAuditLog(Contact $contact) : array
     {
         $return = [];
         

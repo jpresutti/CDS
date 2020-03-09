@@ -34,6 +34,10 @@ class Contact
     public ?bool $Deleted;
     public ?bool $Archived;
     
+    /**
+     * Get pretty assembled name for contact
+     * @return string
+     */
     public function getContactName() : string {
         $name = '';
         $name .= $this->Title ? $this->Title . ' ': '';

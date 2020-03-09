@@ -28,7 +28,7 @@ class CompanyHistory extends BaseController
             header('Location:/companies.php');
             exit;
         }
-        $history = $companyMapper->GetAuditLog($company);
+        $history = $companyMapper->getAuditLog($company);
         View::showView('companyHistory.phtml', ['company' => $company, 'companyHistory' => $history]);
     
     }

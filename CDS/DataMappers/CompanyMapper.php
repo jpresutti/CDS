@@ -12,6 +12,11 @@ use CDS\UserSession;
 
 class CompanyMapper
 {
+    /**
+     * Get Company by primary key
+     * @param $id
+     * @return Company|null
+     */
     public function getByPrimary($id) : ?Company
     {
         $connection = Database::getInstance()->getConnection();
@@ -49,6 +54,11 @@ class CompanyMapper
         return $return;
     }
     
+    /**
+     * Save a company - performs insert or update depending on if primary key is present
+     * @param Company $company
+     * @return Company
+     */
     public function save(Company $company) : Company
     {
         $connection = Database::getInstance()->getConnection();
@@ -70,7 +80,7 @@ class CompanyMapper
                 $company->Archived
             ]) or die(var_dump($connection->errorCode()));
             $company = $this->getByPrimary($connection->lastInsertId());
-            $this->AddAuditLog( $company);
+            $this->addAuditLog( $company);
         } else {
             $originalCompany = $this->getByPrimary($company->PRI);
             $sqlUpsert = $connection->prepare('UPDATE tbldat_Companies SET CompanyName = ?,Ticker = ?, NickName = ?, Address_1 = ?, Address_2 = ?, City = ?, State = ?, PostalCode = ?, HomeCountry = ?, MainCountryOfOrigin = ?, Active = ?, Deleted = ?, Archived = ? WHERE ID = ?');
@@ -90,13 +100,18 @@ class CompanyMapper
                 $company->Archived,
                 $company->ID
             ]);
-            $this->AddAuditLog($originalCompany, $company);
+            $this->addAuditLog($originalCompany, $company);
         }
         
         return $company;
     }
     
-    public function GetAuditLog(Company $company) : array
+    /**
+     * Get company's audit log
+     * @param Company $company
+     * @return array
+     */
+    public function getAuditLog(Company $company) : array
     {
         $return = [];
         
@@ -142,12 +157,19 @@ WHERE CompanyId = ? ORDER BY tbldat_CompanyAuditLog.PRI desc');
         
     }
     
-    private function AddAuditLog(Company $newCompany, Company $oldCompany = null)
+    /**
+     * Add audit log - performed on all saves
+     * @param Company $newCompany
+     * @param Company|null $oldCompany
+     */
+    private function addAuditLog(Company $newCompany, Company $oldCompany = null)
     {
         $old = new \stdClass();
         $new = new \stdClass();
         $changed = false;
         $oldCompany = $oldCompany != null ? $oldCompany : new Company();
+        
+        // Loop through all values of the new company and compare to old
         foreach ($newCompany as $key => $val) {
             if (!isset($oldCompany->$key) || $val != $oldCompany->$key) {
                 $changed = true;
@@ -158,6 +180,7 @@ WHERE CompanyId = ? ORDER BY tbldat_CompanyAuditLog.PRI desc');
         if ( !$changed ) {
             return;
         }
+        // Save audit record
         $connection = Database::getInstance()->getConnection();
         $sqlAudit = $connection->prepare('INSERT INTO tbldat_CompanyAuditLog (ID, CompanyId, UserId,Old, New) VALUES (NEWID(),?,?,?,?)');
         $sqlAudit->execute([

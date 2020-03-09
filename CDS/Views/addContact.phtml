@@ -1,0 +1,117 @@
+<?php
+/** @noinspection PhpUndefinedVariableInspection */
+/** @var CDS\DataModels\Contact $company */
+$company = $arguments['company'];
+
+?>
+<div class="container">
+    <div class="col-8 offset-2">
+        <h2 class="text-center"><?= $company->CompanyName; ?> - <i>Add New Contact</i></h2>
+        <form action="/addContact.php" method="post">
+            <div class="form-group">
+                <div class="row">
+                    <label class="col-2" for="title">Title</label>
+                    <input type="text" maxlength="255" name="title" class="col-10 form-control" id="title">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="fname">First Name</label>
+                    <input type="text" maxlength="50" name="fname" class="col-10 form-control" id="fname">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="mname">Middle Name</label>
+                    <input type="text" maxlength="50" name="mname" class="col-10 form-control" id="mname">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="lname">Last Name</label>
+                    <input type="text" maxlength="50" name="lname" class="col-10 form-control" id="lname">
+                </div>
+                
+                <div class="row">
+                    <label class="col-2" for="suffix">Suffix</label>
+                    <input type="text" maxlength="50" name="suffix" class="col-10 form-control" id="suffix">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address1">Address 1</label>
+                    <input type="text" maxlength="255" name="address1" class="col-10 form-control" id="address1">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address2">Address 2</label>
+                    <input type="text" maxlength="255" name="address2" class="col-10 form-control" id="address2">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="city">City</label>
+                    <input type="text" maxlength="50" name="city" class="col-10 form-control" id="city">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="state">State</label>
+                    <input type="text" maxlength="5" name="state" class="col-10 form-control" id="state">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="postal">Postal Code</label>
+                    <input type="text" maxlength="24" name="postal" class="col-10 form-control" id="postal">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="website">Website</label>
+                    <input type="text" maxlength="255" name="website" class="col-10 form-control" id="website">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="primaryemail">Primary Email</label>
+                    <input type="text" maxlength="255" name="primaryemail" class="col-10 form-control" id="primaryemail">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="email2">Email 2</label>
+                    <input type="text" maxlength="255" name="email2" class="col-10 form-control" id="email2">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="email3">Email 3</label>
+                    <input type="text" maxlength="255" name="email3" class="col-10 form-control" id="email3">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="email4">Email 4</label>
+                    <input type="text" maxlength="255" name="email4" class="col-10 form-control" id="email4">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="primaryphone">Primary Phone</label>
+                    <input type="text" maxlength="10" name="primaryphone" class="col-10 form-control" id="primaryphone">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="mobilephone">Mobile Phone</label>
+                    <input type="text" maxlength="10" name="mobilephone" class="col-10 form-control" id="mobilephone">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="landlinephone">Landline Phone</label>
+                    <input type="text" maxlength="10" name="landlinephone" class="col-10 form-control" id="landlinephone">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="fax">Fax</label>
+                    <input type="text" maxlength="10" name="fax" class="col-10 form-control" id="fax">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="twitter">Twitter Handle</label>
+                    <input type="text" maxlength="255" name="twitter" class="col-10 form-control" id="twitter">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="facebook">Facebook Name</label>
+                    <input type="text" maxlength="255" name="facebook" class="col-10 form-control" id="facebook">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="active" name="active">
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="deleted" name="deleted">
+                    <label class="form-check-label" for="deleted">Deleted</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="archived" name="archived">
+                    <label class="form-check-label" for="archived">Archived</label>
+                </div>
+                <a href="/contacts.php?company=<?= $company->PRI; ?>">Go Back</a><br />
+                <a href="/companies.php?company=<?= $company->PRI; ?>">View Company</a>
+				<input type="hidden" name="companyPri" value="<?= $company->PRI; ?>">
+            </div>
+			<button type="submit" class="btn btn-primary">Add Contact</button>
+
+		</form>
+    </div>
+</div>

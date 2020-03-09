@@ -70,7 +70,7 @@ class CompanyMapper
                 $company->Archived
             ]) or die(var_dump($connection->errorCode()));
             $company = $this->getByPrimary($connection->lastInsertId());
-            
+            $this->AddAuditLog( $company);
         } else {
             $originalCompany = $this->getByPrimary($company->PRI);
             $sqlUpsert = $connection->prepare('UPDATE tbldat_Companies SET CompanyName = ?,Ticker = ?, NickName = ?, Address_1 = ?, Address_2 = ?, City = ?, State = ?, PostalCode = ?, HomeCountry = ?, MainCountryOfOrigin = ?, Active = ?, Deleted = ?, Archived = ? WHERE ID = ?');
@@ -149,7 +149,7 @@ WHERE CompanyId = ? ORDER BY tbldat_CompanyAuditLog.PRI desc');
         $changed = false;
         $oldCompany = $oldCompany != null ? $oldCompany : new Company();
         foreach ($newCompany as $key => $val) {
-            if ($val != $oldCompany->$key) {
+            if (!isset($oldCompany->$key) || $val != $oldCompany->$key) {
                 $changed = true;
                 $new->$key = $val;
                 $old->$key = isset($oldCompany->$key) ? $oldCompany->$key : null;

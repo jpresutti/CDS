@@ -2,17 +2,19 @@
 /** @noinspection PhpUndefinedVariableInspection */
 /** @var CDS\DataModels\Company $company */
 $company = $arguments['company'];
-/** @var array $companyHistory */
-$companyHistory = $arguments['companyHistory'];
+/** @var array $contactHistory */
+$contactHistory = $arguments['contactHistory'];
+/** @var Contact $contact */
+$contact = $arguments['contact'];
 
-?>
+use CDS\DataModels\Contact; ?>
 <div class="container">
 	<div class="col-8 offset-2">
-		<h2 class="text-center"><i>History</i> - <?= $company->CompanyName; ?></h2>
+		<h2 class="text-center"><i>History</i> - <?= $company->CompanyName; ?> - <?= $contact->getContactName(); ?></h2>
 		<form action="/" method="post">
 			<div class="form-group">
-                <?php /** @var CDS\DataModels\CompanyHistory $history */ ?>
-                <?php foreach ($companyHistory as $history): ?>
+                <?php /** @var CDS\DataModels\ContactHistory $history */ ?>
+                <?php foreach ($contactHistory as $history): ?>
 					<div class="row mt-4">Edited by: <?= $history->user->Username; ?></div>
 					<div class="row">Edited on: <?= $history->Timestamp->format('m/d/Y h:i:s A'); ?></div>
 					<div class="row">
@@ -45,7 +47,7 @@ $companyHistory = $arguments['companyHistory'];
                     
                     <?php endforeach; ?>
                 <?php endforeach; ?>
-				<a href="/companies.php?company=<?= $company->PRI; ?>">View Company</a> | <a href="/editCompany.php?company=<?= $company->PRI; ?>">Edit Company</a>
+				<a href="/contacts.php?company=<?= $company->PRI; ?>&contact=<?= $contact->PRI; ?>">View Contact Details</a> | <a href="/editContact.php?company=<?= $company->PRI; ?>&contact=<?= $contact->PRI; ?>">Edit Contact</a>
 			</div>
 
 		</form>

@@ -6,7 +6,7 @@ namespace CDS\Controllers;
 
 use CDS\DataMappers\CompanyMapper;
 use CDS\DataMappers\UserMapper;
-use CDS\DataModels\Company;
+use CDS\DataModels\Contact;
 use CDS\View;
 
 class EditCompany extends BaseController
@@ -20,7 +20,7 @@ class EditCompany extends BaseController
     
     public function post()
     {
-        $company = new Company();
+        $company = new Contact();
         $company->PRI = $_POST['PRI'];
         $company->ID = $_POST['ID'];
         $company->Archived = isset($_POST['archived']);

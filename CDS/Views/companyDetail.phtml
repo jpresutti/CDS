@@ -58,7 +58,8 @@ $company = $arguments['company'];
                     <input disabled type="checkbox" class="form-check-input" id="archived" name="archived" <?php if ( $company->Archived ): ?>checked="checked"<?php endif; ?>>
                     <label class="form-check-label" for="archived">Archived</label>
                 </div>
-				<a href="/companies.php">Go Back</a> | <a href="/companyHistory.php?company=<?= $company->PRI; ?>">See History</a> | <a href="/editCompany.php?company=<?= $company->PRI; ?>">Edit Company</a>
+				<a href="/contacts.php?company=<?= $company->PRI; ?>">View Contact List</a><br />
+				<a href="/companies.php">View Company List</a><br /><a href="/companyHistory.php?company=<?= $company->PRI; ?>">See History</a> | <a href="/editCompany.php?company=<?= $company->PRI; ?>">Edit Company</a>
 			</div>
 			
 		</form>

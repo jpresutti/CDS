@@ -1,0 +1,29 @@
+<?php /** @noinspection PhpUndefinedVariableInspection */ ?>
+<?php /** @var CDS\DataModels\Company $company */ ?>
+<?php $company = $arguments['company']; ?>
+<div class="container">
+	<div class="col-12">
+		<h2><?= $company->CompanyName; ?> - Contact List</h2>
+		<a href="/addContact.php?company=<?= $company->PRI; ?>">Add Contact</a><br/>
+		<table class="table">
+			<tr>
+				<th>Contact Name</th>
+				<th>Active</th>
+				<th>Deleted</th>
+				<th>Archived</th>
+			</tr>
+            
+            <?php /** @var CDS\DataModels\Contact $contact */ ?>
+            <?php /** @noinspection PhpUndefinedVariableInspection */
+            foreach ($arguments['contacts'] as $contact): ?>
+				<tr>
+					<td><a href="/contacts.php?company=<?= $arguments['company']->PRI; ?>&contact=<?= $contact->PRI; ?>"><?= $contact->getContactName(); ?></a></td>
+					<td><?= $contact->Active ? 'Y' : 'N'; ?></td>
+					<td><?= $contact->Deleted ? 'Y' : 'N'; ?></td>
+					<td><?= $contact->Archived ? 'Y' : 'N'; ?></td>
+				</tr>
+            <?php endforeach; ?>
+		</table>
+		<a href="/companies.php?company=<?= $company->PRI; ?>">View Company</a>
+	</div>
+</div>

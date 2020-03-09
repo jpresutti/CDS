@@ -12,7 +12,7 @@ class Companies extends BaseController
     public function get()
     {
         $companyId = $_GET['company'] ?? null;
-        $includeDeleted = isset($_GET['deleted']);
+        $includeDeleted = !empty($_GET['deleted']);
         if ( $companyId != null ) {
             return $this->getDetails($companyId);
         }

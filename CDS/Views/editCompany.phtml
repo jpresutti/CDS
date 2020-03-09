@@ -66,6 +66,7 @@ $company = $arguments['company'];
 			<input type="hidden" name="PRI" value="<?= $company->PRI; ?>">
 			<input type="hidden" name="ID" value="<?= $company->ID; ?>">
 			<button type="submit" class="btn btn-primary">Edit Company</button>
+			<br /><a href="/companies.php?company=<?= $company->PRI; ?>">View Company</a>
 		</form>
 	</div>
 </div>

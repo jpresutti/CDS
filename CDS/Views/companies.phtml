@@ -1,5 +1,6 @@
 <div class="container">
 	<div class="col-12">
+		<h2>Company List</h2>
 		<a href="/addCompany.php">Add Company</a><br/>
 		<table class="table">
 			<tr>
@@ -9,7 +10,7 @@
 				<th>Archived</th>
 			</tr>
             
-            <?php /** @var CDS\DataModels\Company $company */ ?>
+            <?php /** @var CDS\DataModels\Contact $company */ ?>
             <?php /** @noinspection PhpUndefinedVariableInspection */
             foreach ($arguments['companies'] as $company): ?>
 				<tr>

@@ -7,7 +7,7 @@ create table tbldat_BusinessContacts
         constraint DF_tbldat_BusinessContacts_ID default newid() not null,
     PRI           bigint identity
         constraint PK_PrimaryKey
-        primary key,
+            primary key,
     Company_Key   bigint,
     Title         nvarchar(50),
     FName         nvarchar(50),
@@ -37,7 +37,7 @@ create table tbldat_BusinessContacts
     Archived      bit
         constraint DF_tbldat_BusinessContacts_Archived default 0 not null
 )
-    go
+go
 
 exec sp_addextendedproperty 'MS_Description', 'PRI is CDS Default Primary Key', 'SCHEMA', 'dbo', 'TABLE',
      'tbldat_BusinessContacts', 'CONSTRAINT', 'PK_PrimaryKey'
@@ -49,7 +49,7 @@ create table tbldat_Companies
         constraint DF_tbldat_Companies_ID default newid() not null,
     PRI                 bigint identity
         constraint PK_tbldat_Companies
-        primary key,
+            primary key,
     CompanyName         nvarchar(255),
     Ticker              nvarchar(50),
     NickName            nvarchar(255),
@@ -64,28 +64,44 @@ create table tbldat_Companies
     Deleted             bit                               not null,
     Archived            bit                               not null
 )
-    go
+go
 
 create table tbldat_ContactAuditLog
 (
     ID        uniqueidentifier not null,
     PRI       bigint identity
         constraint PK_auditLog_PrimaryKey
-        primary key,
-    ContactId bigint,
+            primary key,
+    ContactId bigint constraint FK_CompanyauditLog_ContactId references tbldat_BusinessContacts(PRI),
+    UserId bigint constraint FK_ContactauditLog_UserId references tbldat_Users(PRI),
     Old       nvarchar(max),
-    New       nvarchar(max)
+    New       nvarchar(max),
+    Timestamp DATETIME2(0) DEFAULT GETDATE()
 )
-    go
+go
+
+create table tbldat_CompanyAuditLog
+(
+    ID        uniqueidentifier not null,
+    PRI       bigint identity
+        constraint PK_CompanyauditLog_PrimaryKey
+            primary key,
+    CompanyId bigint constraint FK_CompanyauditLog_CompanyId references tbldat_Companies(PRI),
+    UserId bigint constraint FK_CompanyauditLog_UserId references tbldat_Users(PRI),
+    Old       nvarchar(max),
+    New       nvarchar(max),
+    Timestamp DATETIME2(0) DEFAULT GETDATE()
+)
 
 create table tbldat_Users
 (
     ID       uniqueidentifier not null,
     PRI      bigint identity
         constraint PK_Users_PrimaryKey
-        primary key,
+            primary key,
     Username nvarchar(255),
-    Password nvarchar(255)
+    Password nvarchar(255),
+    Active bit default 1 not null
 )
-    go
+go
 

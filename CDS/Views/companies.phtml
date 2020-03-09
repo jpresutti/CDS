@@ -1,0 +1,24 @@
+<div class="container">
+	<div class="col-12">
+		<a href="/addCompany.php">Add Company</a><br/>
+		<table class="table">
+			<tr>
+				<th>Company Name</th>
+				<th>Active</th>
+				<th>Deleted</th>
+				<th>Archived</th>
+			</tr>
+            
+            <?php /** @var CDS\DataModels\Company $company */ ?>
+            <?php /** @noinspection PhpUndefinedVariableInspection */
+            foreach ($arguments['companies'] as $company): ?>
+				<tr>
+					<td><a href="/companies.php?company=<?= $company->PRI; ?>"><?= $company->CompanyName; ?></a></td>
+					<td><?= $company->Active ? 'Y' : 'N'; ?></td>
+					<td><?= $company->Deleted ? 'Y' : 'N'; ?></td>
+					<td><?= $company->Archived ? 'Y' : 'N'; ?></td>
+				</tr>
+            <?php endforeach; ?>
+		</table>
+	</div>
+</div>

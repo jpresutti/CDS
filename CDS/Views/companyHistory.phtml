@@ -1,0 +1,53 @@
+<?php
+/** @noinspection PhpUndefinedVariableInspection */
+/** @var CDS\DataModels\Company $company */
+$company = $arguments['company'];
+/** @var array $companyHistory */
+$companyHistory = $arguments['companyHistory'];
+
+?>
+<div class="container">
+	<div class="col-8 offset-2">
+		<h2 class="text-center"><?= $company->CompanyName; ?></h2>
+		<form action="/" method="post">
+			<div class="form-group">
+                <?php /** @var CDS\DataModels\CompanyHistory $history */ ?>
+                <?php foreach ($companyHistory as $history): ?>
+					<div class="row mt-4">Edited by: <?= $history->user->Username; ?></div>
+					<div class="row">Edited on: <?= $history->Timestamp->format('m/d/Y h:i:s A'); ?></div>
+					<div class="row">
+						<div class="col-3">Name</div>
+						<div class="col-4">Old Value</div>
+						<div class="col-4">New Value</div>
+					</div>
+                    <?php foreach ($history->New as $key => $val): ?>
+                        <?php if ($history->Old->$key === true) {
+                            $history->Old->$key = 'Y';
+                        }
+                        if ($history->Old->$key === false) {
+                            $history->Old->$key = 'N';
+                        }
+                        if ($history->New->$key === true) {
+                            $history->New->$key = 'Y';
+                        }
+                        if ($history->New->$key === false) {
+                            $history->New->$key = 'N';
+                        } ?>
+						<div class="row">
+							<div class="col-3">
+                                <?= preg_replace('/(?<! )[A-Z]/', ' $0', str_replace('_', ' ', $key)); ?>
+							</div>
+							<div class="col-4"><input type="text" class="form-control" readonly
+													  value="<?= $history->Old->$key; ?>"></div>
+							<div class="col-4"><input type="text" class="form-control" readonly
+													  value="<?= $history->New->$key; ?>"></div>
+						</div>
+                    
+                    <?php endforeach; ?>
+                <?php endforeach; ?>
+				<a href="/companies.php?company=<?= $company->PRI; ?>">Go Back</a> | <a href="/editCompany.php?company=<?= $company->PRI; ?>">Edit Company</a>
+			</div>
+
+		</form>
+	</div>
+</div>

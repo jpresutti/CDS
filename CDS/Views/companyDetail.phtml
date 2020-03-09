@@ -1,0 +1,66 @@
+<?php
+/** @noinspection PhpUndefinedVariableInspection */
+/** @var CDS\DataModels\Company $company */
+$company = $arguments['company'];
+
+?>
+<div class="container">
+	<div class="col-8 offset-2">
+		<h2 class="text-center"><?= $company->CompanyName; ?></h2>
+		<form action="/" method="post">
+			<div class="form-group">
+                <div class="row">
+                    <label class="col-2" for="ticker">Ticker</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->Ticker; ?>" name="ticker" class="col-10 form-control" id="ticker">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="nickname">NickName</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->NickName; ?>" name="nickname" class="col-10 form-control" id="nickname">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address1">Address 1</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->Address_1; ?>" name="address1" class="col-10 form-control" id="address1">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address2">Address 2</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->Address_2; ?>" name="address2" class="col-10 form-control" id="address2">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="city">City</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->City; ?>" name="city" class="col-10 form-control" id="city">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="state">State</label>
+                    <input disabled type="text" name="state" value="<?= $company->State; ?>" maxlength="5" class="col-10 form-control" id="state">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="postal">Postal Code</label>
+                    <input disabled type="text" name="postal" value="<?= $company->PostalCode; ?>" maxlength="10" class="col-10 form-control" id="postal">
+                </div>
+
+                <div class="row">
+                    <label class="col-2" for="homecountry">Home Country</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->HomeCountry; ?>" name="homecountry" class="col-10 form-control" id="homecountry">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="origincountry">Main Country of Origin</label>
+                    <input disabled type="text" maxlength="255" value="<?= $company->MainCountryOfOrigin; ?>" name="origincountry" class="col-10 form-control" id="origincountry">
+                </div>
+                <div class="form-check">
+                    <input disabled type="checkbox" class="form-check-input" id="active" name="active" <?php if ( $company->Active ): ?>checked="checked"<?php endif; ?>>
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
+                <div class="form-check">
+                    <input disabled type="checkbox" class="form-check-input" id="deleted" name="deleted" <?php if ( $company->Deleted ): ?>checked="checked"<?php endif; ?>>
+                    <label class="form-check-label" for="deleted">Deleted</label>
+                </div>
+                <div class="form-check">
+                    <input disabled type="checkbox" class="form-check-input" id="archived" name="archived" <?php if ( $company->Archived ): ?>checked="checked"<?php endif; ?>>
+                    <label class="form-check-label" for="archived">Archived</label>
+                </div>
+				<a href="/companies.php">Go Back</a> | <a href="/companyHistory.php?company=<?= $company->PRI; ?>">See History</a> | <a href="/editCompany.php?company=<?= $company->PRI; ?>">Edit Company</a>
+			</div>
+			
+		</form>
+	</div>
+</div>

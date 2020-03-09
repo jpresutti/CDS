@@ -11,8 +11,7 @@ class Login extends BaseController
 {
     public function get()
     {
-        $path = 'login.phtml';
-        View::showView($path);
+        View::showView('login.phtml');
     }
     
     public function post()

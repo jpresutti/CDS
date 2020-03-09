@@ -6,7 +6,7 @@ namespace CDS\DataModels;
 
 class Company {
     public string $ID;
-    public int $PRI;
+    public string $PRI;
     public string $CompanyName;
     public string $Ticker;
     public string $NickName;

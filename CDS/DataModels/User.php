@@ -6,9 +6,10 @@ namespace CDS\DataModels;
 
 class User {
     public string $ID;
-    public int $PRI;
+    public string $PRI;
     public string $Username;
     public string $Password;
+    public bool $Active;
     
     public function setPassword(string $password) : void {
         $this->Password = password_hash($password,PASSWORD_DEFAULT);

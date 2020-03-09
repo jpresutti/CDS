@@ -4,6 +4,7 @@ declare(strict_types=1);
 use CDS\Autoload;
 use CDS\Config;
 use CDS\DataMappers\UserMapper;
+use CDS\UserSession;
 const PROJECT_ROOT = __DIR__ . DIRECTORY_SEPARATOR;
 
 // Loads autoloader class
@@ -17,6 +18,7 @@ session_start();
 $user = null;
 if ( !defined('RUNASCLI') && isset($_SESSION['username'])) {
     $user = (new UserMapper())->getByUsername($_SESSION['username']);
+    UserSession::getInstance()->setUser($user);
 }
 if ( defined('PRIVATE') && $user == null ) {
     header('Location:/');

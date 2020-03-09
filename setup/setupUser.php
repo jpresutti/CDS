@@ -14,7 +14,19 @@ if ( $user == null ) {
     $user->Username = 'Admin';
     $user->setPassword('Passw0rd');
     $user = (new UserMapper())->save($user);
-    echo 'User created.' . PHP_EOL;
+    echo 'User Admin created.' . PHP_EOL;
 } else {
-    echo 'User already exists.' . PHP_EOL;
+    echo 'User Admin already exists.' . PHP_EOL;
+}
+
+$user = $userMapper->getByUsername('Jeremy');
+
+if ( $user == null ) {
+    $user = new User();
+    $user->Username = 'Jeremy';
+    $user->setPassword('passw0rd');
+    $user = (new UserMapper())->save($user);
+    echo 'User Jeremy created.' . PHP_EOL;
+} else {
+    echo 'User Jeremy already exists.' . PHP_EOL;
 }

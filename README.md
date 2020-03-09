@@ -5,6 +5,10 @@ Copy `config.ini.sample` to `config.ini` and update values before attempting to 
 
 after configuring config file, run `php setup/setupUser.php`
 
-Default user: Admin
+Default primary user: Admin
 
-Default password: Passw0rd (that is a zero not an oh)
+Default primary password: Passw0rd (that is a zero not an oh)
+
+Default secondary user: Jeremy
+
+Default secondary password: passw0rd (that is a zero not an oh)

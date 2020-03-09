@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CDS\Controllers;
 
 use CDS\DataMappers\CompanyMapper;
-use CDS\DataMappers\UserMapper;
 use CDS\DataModels\Company;
 use CDS\View;
 

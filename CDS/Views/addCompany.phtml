@@ -1,0 +1,63 @@
+<div class="container">
+	<div class="col-8 offset-2">
+		<h2 class="text-center">Add Company</h2>
+		<form action="/addCompany.php" method="post">
+			<div class="form-group">
+				<div class="row">
+					<label class="col-2" for="company-name">Company Name</label>
+					<input type="text" maxlength="255" required name="name" class="col-10 form-control" id="company-name">
+				</div>
+                <div class="row">
+                    <label class="col-2" for="ticker">Ticker</label>
+                    <input type="text" maxlength="255" name="ticker" class="col-10 form-control" id="ticker">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="nickname">NickName</label>
+                    <input type="text" maxlength="255" name="nickname" class="col-10 form-control" id="nickname">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address1">Address 1</label>
+                    <input type="text" maxlength="255" name="address1" class="col-10 form-control" id="address1">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="address2">Address 2</label>
+                    <input type="text" maxlength="255" name="address2" class="col-10 form-control" id="address2">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="city">City</label>
+                    <input type="text" maxlength="255" name="city" class="col-10 form-control" id="city">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="state">State</label>
+                    <input type="text" name="state" maxlength="5" class="col-10 form-control" id="state">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="postal">Postal Code</label>
+                    <input type="text" name="postal" maxlength="10" class="col-10 form-control" id="postal">
+                </div>
+
+                <div class="row">
+                    <label class="col-2" for="homecountry">Home Country</label>
+                    <input type="text" maxlength="255" name="homecountry" class="col-10 form-control" id="homecountry">
+                </div>
+                <div class="row">
+                    <label class="col-2" for="origincountry">Main Country of Origin</label>
+                    <input type="text" maxlength="255" name="origincountry" class="col-10 form-control" id="origincountry">
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="active" name="active">
+                    <label class="form-check-label" for="active">Active</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="deleted" name="deleted">
+                    <label class="form-check-label" for="deleted">Deleted</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="archived" name="archived">
+                    <label class="form-check-label" for="archived">Archived</label>
+                </div>
+			</div>
+			<button type="submit" class="btn btn-primary">Add Company</button>
+		</form>
+	</div>
+</div>

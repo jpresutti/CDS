@@ -26,6 +26,25 @@ class CompanyMapper
         return null;
     }
     
+    /**
+     * Get full list of companies
+     * @param bool $includeDeleted
+     * @return array
+     */
+    public function getCompanyList(bool $includeDeleted = false) : array {
+        $return = [];
+        $connection = Database::getInstance()->getConnection();
+    
+        $extra = $includeDeleted ? '' : ' WHERE Deleted = 0';
+        $sqlFetch = $connection->prepare('SELECT ID, PRI, CompanyName, Active, Deleted, Archived FROM tbldat_Companies' . $extra . ' ORDER BY CompanyName');
+        $sqlFetch->execute();
+    
+        while ($company = $sqlFetch->fetchObject(Company::class)) {
+            $return[] = $company;
+        }
+        return $return;
+    }
+    
     public function save(Company $company) : Company
     {
         $connection = Database::getInstance()->getConnection();
@@ -49,6 +68,7 @@ class CompanyMapper
             $company = $this->getByPrimary($connection->lastInsertId());
             
         } else {
+            $originalCompany = $this->getByPrimary($company->ID);
             $sqlUpsert = $connection->prepare('UPDATE tbldat_Companies SET CompanyName = ?,Ticker = ?, NickName = ?, Address_1 = ?, Address_2 = ?, City = ?, State = ?, PostalCode = ?, HomeCountry = ?, MainCountryOfOrigin = ?, Active = ?, Deleted = ?, Archived = ? WHERE ID = ?');
             $sqlUpsert->execute([
                 $company->CompanyName,

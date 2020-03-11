@@ -1,6 +1,18 @@
+CREATE DATABASE CDSSampleAPP_Main;
+GO
 USE [CDSSampleApp_Main]
 GO
-
+create table tbldat_Users
+(
+    ID       uniqueidentifier not null,
+    PRI      bigint identity
+        constraint PK_Users_PrimaryKey
+            primary key,
+    Username nvarchar(255),
+    Password nvarchar(255),
+    Active bit default 1 not null
+)
+GO
 create table tbldat_BusinessContacts
 (
     ID            uniqueidentifier
@@ -93,15 +105,5 @@ create table tbldat_CompanyAuditLog
     Timestamp DATETIME2(0) DEFAULT GETDATE()
 )
 
-create table tbldat_Users
-(
-    ID       uniqueidentifier not null,
-    PRI      bigint identity
-        constraint PK_Users_PrimaryKey
-            primary key,
-    Username nvarchar(255),
-    Password nvarchar(255),
-    Active bit default 1 not null
-)
-go
 
+go

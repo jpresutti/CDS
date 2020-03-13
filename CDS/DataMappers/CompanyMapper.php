@@ -21,7 +21,7 @@ class CompanyMapper
     {
         $connection = Database::getInstance()->getConnection();
         
-        $sqlFetch = $connection->prepare('SELECT ID, PRI, CompanyName, Ticker, NickName, Address_1, Address_2, City, State, PostalCode, HomeCountry, MainCountryOfOrigin, Active, Deleted, Archived FROM tbldat_Companies where PRI = ?');
+        $sqlFetch = $connection->prepare('EXEC GetCompanyByPri @PRI = ?');
         $sqlFetch->execute([
             $id
         ]);
@@ -43,8 +43,8 @@ class CompanyMapper
         $return = [];
         $connection = Database::getInstance()->getConnection();
         
-        $extra = $includeDeleted ? '' : ' WHERE Deleted = 0';
-        $sqlFetch = $connection->prepare('SELECT ID, PRI, CompanyName, Active, Deleted, Archived FROM tbldat_Companies' . $extra . ' ORDER BY CompanyName');
+        $statement = $includeDeleted ? 'EXEC GetAllCompaniesWithDeleted' :'EXEC GetAllCompaniesWithoutDeleted';
+        $sqlFetch = $connection->prepare($statement);
         $sqlFetch->execute();
         
         while ($company = $sqlFetch->fetchObject(Company::class)) {
@@ -116,22 +116,7 @@ class CompanyMapper
         $return = [];
         
         $sqlFetch = Database::getInstance()->getConnection()->prepare('
-SELECT
-    tbldat_CompanyAuditLog.ID,
-    tbldat_CompanyAuditLog.PRI,
-    tbldat_CompanyAuditLog.Old,
-    tbldat_CompanyAuditLog.New,
-    tbldat_CompanyAuditLog.Timestamp,
-    tbldat_Users.ID as UserID,
-    tbldat_Users.PRI as UserPRI,
-    tbldat_Users.Username as UserUsername
-
-    
-       
-
-FROM tbldat_CompanyAuditLog
-LEFT JOIN tbldat_Users ON UserId = tbldat_Users.PRI
-WHERE CompanyId = ? ORDER BY tbldat_CompanyAuditLog.PRI desc');
+Exec GetCompanyAuditLog @Company=?');
         $sqlFetch->execute([$company->PRI]);
         while ( $row = $sqlFetch->fetchObject()) {
             $record = new CompanyHistory();

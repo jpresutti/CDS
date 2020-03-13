@@ -18,7 +18,7 @@ class UserMapper
     {
         $connection = Database::getInstance()->getConnection();
         
-        $sqlFetch = $connection->prepare('SELECT ID,PRI,Username,Password FROM dbo.tbldat_Users where Username = ? and active = 1');
+        $sqlFetch = $connection->prepare('EXEC GetUserByUsername @Username = ?');
         $sqlFetch->execute([
             $username
         ]);

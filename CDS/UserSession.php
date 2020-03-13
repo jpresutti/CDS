@@ -27,8 +27,8 @@ class UserSession {
         return $this->user;
     }
     
-    public function getUserPri() : int {
-        return $this->user->PRI;
+    public function getUserPri() : ?int {
+        return isset($this->user) ? $this->user->PRI : null;
     }
     
     protected function __construct()

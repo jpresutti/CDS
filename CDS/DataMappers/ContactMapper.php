@@ -43,9 +43,9 @@ class ContactMapper
     public function getByCompany(Company $company, bool $includeDeleted = false) : array
     {
         $connection = Database::getInstance()->getConnection();
-        $extra = $includeDeleted ? '' : ' and Deleted = 0';
+        $statement = $includeDeleted ? 'EXEC GetContactsWithDeleted @Company = ?' : 'EXEC GetContactsWithoutDeleted @Company = ?';
     
-        $sqlFetch = $connection->prepare('SELECT ID, PRI, Company_Key, Title, FName, MName, LName, Suffix, Address_1, Address_2, City, State, PostalCode, Website, Email_Primary, Email_2, EMail_3, Email_4, Phone_Primary, Phone_Mobile, Phone_Land, Phone_Fax, TwitterHandle, FaceBookName, Active, Deleted, Archived FROM tbldat_BusinessContacts where Company_Key = ?' . $extra . ' ORDER BY LName');
+        $sqlFetch = $connection->prepare($statement);
         $sqlFetch->execute([
             $company->PRI
         ]);
@@ -177,22 +177,7 @@ class ContactMapper
         $return = [];
         
         $sqlFetch = Database::getInstance()->getConnection()->prepare('
-SELECT
-    tbldat_ContactAuditLog.ID,
-    tbldat_ContactAuditLog.PRI,
-    tbldat_ContactAuditLog.Old,
-    tbldat_ContactAuditLog.New,
-    tbldat_ContactAuditLog.Timestamp,
-    tbldat_Users.ID as UserID,
-    tbldat_Users.PRI as UserPRI,
-    tbldat_Users.Username as UserUsername
-
-    
-    
-
-FROM tbldat_ContactAuditLog
-LEFT JOIN tbldat_Users ON UserId = tbldat_Users.PRI
-WHERE ContactId = ? ORDER BY tbldat_ContactAuditLog.PRI desc');
+EXEC GetContactAuditLog @Contact = ?');
         $sqlFetch->execute([$contact->PRI]);
         while ( $row = $sqlFetch->fetchObject()) {
             $record = new ContactHistory();

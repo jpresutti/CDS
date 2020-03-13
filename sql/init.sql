@@ -10,7 +10,7 @@ create table tbldat_Users
             primary key,
     Username nvarchar(255),
     Password nvarchar(255),
-    Active bit default 1 not null
+    Active   bit default 1    not null
 )
 GO
 create table tbldat_BusinessContacts
@@ -84,8 +84,10 @@ create table tbldat_ContactAuditLog
     PRI       bigint identity
         constraint PK_auditLog_PrimaryKey
             primary key,
-    ContactId bigint constraint FK_CompanyauditLog_ContactId references tbldat_BusinessContacts(PRI),
-    UserId bigint constraint FK_ContactauditLog_UserId references tbldat_Users(PRI),
+    ContactId bigint
+        constraint FK_CompanyauditLog_ContactId references tbldat_BusinessContacts (PRI),
+    UserId    bigint
+        constraint FK_ContactauditLog_UserId references tbldat_Users (PRI),
     Old       nvarchar(max),
     New       nvarchar(max),
     Timestamp DATETIME2(0) DEFAULT GETDATE()
@@ -98,8 +100,10 @@ create table tbldat_CompanyAuditLog
     PRI       bigint identity
         constraint PK_CompanyauditLog_PrimaryKey
             primary key,
-    CompanyId bigint constraint FK_CompanyauditLog_CompanyId references tbldat_Companies(PRI),
-    UserId bigint constraint FK_CompanyauditLog_UserId references tbldat_Users(PRI),
+    CompanyId bigint
+        constraint FK_CompanyauditLog_CompanyId references tbldat_Companies (PRI),
+    UserId    bigint
+        constraint FK_CompanyauditLog_UserId references tbldat_Users (PRI),
     Old       nvarchar(max),
     New       nvarchar(max),
     Timestamp DATETIME2(0) DEFAULT GETDATE()
@@ -107,3 +111,140 @@ create table tbldat_CompanyAuditLog
 
 
 go
+
+CREATE PROCEDURE GetCompanyByPri @PRI BIGINT AS
+SELECT ID,
+       PRI,
+       CompanyName,
+       Ticker,
+       NickName,
+       Address_1,
+       Address_2,
+       City,
+       State,
+       PostalCode,
+       HomeCountry,
+       MainCountryOfOrigin,
+       Active,
+       Deleted,
+       Archived
+FROM tbldat_Companies
+where PRI = @PRI;
+    
+    CREATE PROCEDURE GetAllCompaniesWithDeleted AS
+    SELECT ID, PRI, CompanyName, Active, Deleted, Archived
+    FROM tbldat_Companies
+    ORDER BY CompanyName;
+GO
+CREATE PROCEDURE GetAllCompaniesWithoutDeleted AS
+SELECT ID, PRI, CompanyName, Active, Deleted, Archived
+FROM tbldat_Companies
+WHERE Deleted = 0
+ORDER BY CompanyName;
+    
+    CREATE PROCEDURE GetCompanyAuditLog @Company BIGINT AS
+    SELECT tbldat_CompanyAuditLog.ID,
+           tbldat_CompanyAuditLog.PRI,
+           tbldat_CompanyAuditLog.Old,
+           tbldat_CompanyAuditLog.New,
+           tbldat_CompanyAuditLog.Timestamp,
+           tbldat_Users.ID       as UserID,
+           tbldat_Users.PRI      as UserPRI,
+           tbldat_Users.Username as UserUsername
+    
+    
+    FROM tbldat_CompanyAuditLog
+             LEFT JOIN tbldat_Users ON UserId = tbldat_Users.PRI
+    WHERE CompanyId = @Company
+    ORDER BY tbldat_CompanyAuditLog.PRI desc;
+
+GO
+CREATE PROCEDURE GetContactAuditLog @Contact BIGINT AS
+SELECT tbldat_ContactAuditLog.ID,
+       tbldat_ContactAuditLog.PRI,
+       tbldat_ContactAuditLog.Old,
+       tbldat_ContactAuditLog.New,
+       tbldat_ContactAuditLog.Timestamp,
+       tbldat_Users.ID       as UserID,
+       tbldat_Users.PRI      as UserPRI,
+       tbldat_Users.Username as UserUsername
+
+FROM tbldat_ContactAuditLog
+         LEFT JOIN tbldat_Users ON UserId = tbldat_Users.PRI
+WHERE ContactId = @Contact
+ORDER BY tbldat_ContactAuditLog.PRI desc;
+
+GO
+CREATE PROCEDURE GetContactsWithDeleted @Company BIGINT AS
+SELECT ID,
+       PRI,
+       Company_Key,
+       Title,
+       FName,
+       MName,
+       LName,
+       Suffix,
+       Address_1,
+       Address_2,
+       City,
+       State,
+       PostalCode,
+       Website,
+       Email_Primary,
+       Email_2,
+       EMail_3,
+       Email_4,
+       Phone_Primary,
+       Phone_Mobile,
+       Phone_Land,
+       Phone_Fax,
+       TwitterHandle,
+       FaceBookName,
+       Active,
+       Deleted,
+       Archived
+FROM tbldat_BusinessContacts
+where Company_Key = @Company
+ORDER BY LName;
+GO
+CREATE PROCEDURE GetContactsWithoutDeleted @Company BIGINT AS
+SELECT ID,
+       PRI,
+       Company_Key,
+       Title,
+       FName,
+       MName,
+       LName,
+       Suffix,
+       Address_1,
+       Address_2,
+       City,
+       State,
+       PostalCode,
+       Website,
+       Email_Primary,
+       Email_2,
+       EMail_3,
+       Email_4,
+       Phone_Primary,
+       Phone_Mobile,
+       Phone_Land,
+       Phone_Fax,
+       TwitterHandle,
+       FaceBookName,
+       Active,
+       Deleted,
+       Archived
+FROM tbldat_BusinessContacts
+where Company_Key = @Company
+  and Deleted = 0
+ORDER BY LName;
+
+GO
+
+CREATE PROCEDURE GetUserByUsername @Username nvarchar(255) AS
+SELECT ID, PRI, Username, Password
+FROM dbo.tbldat_Users
+where Username = @Username
+  and active = 1;
+GO

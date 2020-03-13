@@ -46,7 +46,7 @@ class AddContact extends BaseController
         $contact->Website = $_POST['website'];
         $contact->Email_Primary = $_POST['primaryemail'];
         $contact->Email_2 = $_POST['email2'];
-        $contact->EMail_3 = $_POST['email3'];
+        $contact->Email_3 = $_POST['email3'];
         $contact->Email_4 = $_POST['email4'];
         $contact->Phone_Primary = $_POST['primaryphone'];
         $contact->Phone_Mobile = $_POST['mobilephone'];

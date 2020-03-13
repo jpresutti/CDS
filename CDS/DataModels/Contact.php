@@ -22,7 +22,7 @@ class Contact
     public ?string $Website;
     public ?string $Email_Primary;
     public ?string $Email_2;
-    public ?string $EMail_3;
+    public ?string $Email_3;
     public ?string $Email_4;
     public ?string $Phone_Primary;
     public ?string $Phone_Mobile;

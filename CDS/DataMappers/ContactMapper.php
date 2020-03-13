@@ -22,7 +22,7 @@ class ContactMapper
     {
         $connection = Database::getInstance()->getConnection();
         
-        $sqlFetch = $connection->prepare('SELECT ID, PRI, Company_Key, Title, FName, MName, LName, Suffix, Address_1, Address_2, City, State, PostalCode, Website, Email_Primary, Email_2, EMail_3, Email_4, Phone_Primary, Phone_Mobile, Phone_Land, Phone_Fax, TwitterHandle, FaceBookName, Active, Deleted, Archived FROM tbldat_BusinessContacts where PRI = ?');
+        $sqlFetch = $connection->prepare('SELECT ID, PRI, Company_Key, Title, FName, MName, LName, Suffix, Address_1, Address_2, City, State, PostalCode, Website, Email_Primary, Email_2, Email_3, Email_4, Phone_Primary, Phone_Mobile, Phone_Land, Phone_Fax, TwitterHandle, FaceBookName, Active, Deleted, Archived FROM tbldat_BusinessContacts where PRI = ?');
         $sqlFetch->execute([
             $id
         ]);
@@ -66,7 +66,7 @@ class ContactMapper
     {
         $connection = Database::getInstance()->getConnection();
         if (!isset($contact->ID)) {
-            $sqlUpsert = $connection->prepare('INSERT INTO tbldat_BusinessContacts (ID, Company_Key, Title, FName, MName, LName, Suffix, Address_1, Address_2, City, State, PostalCode, Website, Email_Primary, Email_2, EMail_3, Email_4, Phone_Primary, Phone_Mobile, Phone_Land, Phone_Fax, TwitterHandle, FaceBookName, Active, Deleted, Archived) VALUES (NEWID(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+            $sqlUpsert = $connection->prepare('INSERT INTO tbldat_BusinessContacts (ID, Company_Key, Title, FName, MName, LName, Suffix, Address_1, Address_2, City, State, PostalCode, Website, Email_Primary, Email_2, Email_3, Email_4, Phone_Primary, Phone_Mobile, Phone_Land, Phone_Fax, TwitterHandle, FaceBookName, Active, Deleted, Archived) VALUES (NEWID(),?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
             $sqlUpsert->execute([
                 $contact->Company_Key,
                 $contact->Title,
@@ -82,7 +82,7 @@ class ContactMapper
                 $contact->Website,
                 $contact->Email_Primary,
                 $contact->Email_2,
-                $contact->EMail_3,
+                $contact->Email_3,
                 $contact->Email_4,
                 $contact->Phone_Primary,
                 $contact->Phone_Mobile,
@@ -100,7 +100,7 @@ class ContactMapper
     
         } else {
             $originalContact = $this->getByPrimary($contact->PRI);
-            $sqlUpsert = $connection->prepare('UPDATE tbldat_BusinessContacts SET Company_Key = ?, Title = ?, FName = ?, MName = ?, LName = ?, Suffix = ?, Address_1 = ?, Address_2 = ?, City = ?, State = ?, PostalCode = ?, Website = ?, Email_Primary = ?, Email_2 = ?, EMail_3 = ?, Email_4 = ?, Phone_Primary = ?, Phone_Mobile = ?, Phone_Land = ?, Phone_Fax = ?, TwitterHandle = ?, FaceBookName = ?, Active = ?, Deleted = ?, Archived = ?  WHERE ID = ?');
+            $sqlUpsert = $connection->prepare('UPDATE tbldat_BusinessContacts SET Company_Key = ?, Title = ?, FName = ?, MName = ?, LName = ?, Suffix = ?, Address_1 = ?, Address_2 = ?, City = ?, State = ?, PostalCode = ?, Website = ?, Email_Primary = ?, Email_2 = ?, Email_3 = ?, Email_4 = ?, Phone_Primary = ?, Phone_Mobile = ?, Phone_Land = ?, Phone_Fax = ?, TwitterHandle = ?, FaceBookName = ?, Active = ?, Deleted = ?, Archived = ?  WHERE ID = ?');
             $sqlUpsert->execute([
                 $contact->Company_Key,
                 $contact->Title,
@@ -116,7 +116,7 @@ class ContactMapper
                 $contact->Website,
                 $contact->Email_Primary,
                 $contact->Email_2,
-                $contact->EMail_3,
+                $contact->Email_3,
                 $contact->Email_4,
                 $contact->Phone_Primary,
                 $contact->Phone_Mobile,

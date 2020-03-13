@@ -130,8 +130,9 @@ SELECT ID,
        Archived
 FROM tbldat_Companies
 where PRI = @PRI;
-    
-    CREATE PROCEDURE GetAllCompaniesWithDeleted AS
+GO
+
+CREATE PROCEDURE GetAllCompaniesWithDeleted AS
     SELECT ID, PRI, CompanyName, Active, Deleted, Archived
     FROM tbldat_Companies
     ORDER BY CompanyName;
@@ -141,7 +142,7 @@ SELECT ID, PRI, CompanyName, Active, Deleted, Archived
 FROM tbldat_Companies
 WHERE Deleted = 0
 ORDER BY CompanyName;
-    
+GO
     CREATE PROCEDURE GetCompanyAuditLog @Company BIGINT AS
     SELECT tbldat_CompanyAuditLog.ID,
            tbldat_CompanyAuditLog.PRI,
@@ -151,8 +152,8 @@ ORDER BY CompanyName;
            tbldat_Users.ID       as UserID,
            tbldat_Users.PRI      as UserPRI,
            tbldat_Users.Username as UserUsername
-    
-    
+
+
     FROM tbldat_CompanyAuditLog
              LEFT JOIN tbldat_Users ON UserId = tbldat_Users.PRI
     WHERE CompanyId = @Company

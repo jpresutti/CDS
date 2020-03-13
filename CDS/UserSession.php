@@ -18,19 +18,34 @@ class UserSession {
         }
         return static::$instance;
     }
-    
+
+    /**
+     * Set the user into the object
+     * @param User $user
+     */
     public function setUser(User $user) : void {
         $this->user = $user;
     }
-    
+
+    /**
+     * get the user
+     * @return User
+     */
     public function getUser() : User {
         return $this->user;
     }
-    
+
+    /**
+     * Get user's primary key or null if no user
+     * @return int|null
+     */
     public function getUserPri() : ?int {
         return isset($this->user) ? $this->user->PRI : null;
     }
-    
+
+    /**
+     * UserSession constructor. - Empty constructor protected to prevent outside instantiation
+     */
     protected function __construct()
     {
     }

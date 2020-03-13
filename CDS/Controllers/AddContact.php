@@ -18,7 +18,7 @@ class AddContact extends BaseController
         $companyMapper = new CompanyMapper();
         $company = $companyMapper->getByPrimary($companyId);
         if ( $company == null ) {
-            header('Location:/company.php');
+            header('Location:/companies.php');
             exit;
         }
         View::showView('addContact.phtml',['company' => $company]);

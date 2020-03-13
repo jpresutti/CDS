@@ -21,7 +21,7 @@ class Contacts extends BaseController
         $companyMapper = new CompanyMapper();
         $company = $companyMapper->getByPrimary($companyId);
         if ($company == null) {
-            header('Location:/company.php');
+            header('Location:/companies.php');
             exit;
         }
         if ($contactId != null) {
@@ -39,7 +39,7 @@ class Contacts extends BaseController
         
         $contact = (new ContactMapper())->getByPrimary($contactId);
         if ($contact == null || $contact->Company_Key != $company->PRI) {
-            header('Location:/company.php');
+            header('Location:/companies.php');
             exit;
         }
         View::showView('contactDetail.phtml', ['company' => $company, 'contact' => $contact]);

@@ -8,9 +8,11 @@ class Config {
     private static $instance;
     
     private array $configData;
+
     /**
      * Get an instance of the config class
      * @return Config
+     * @throws \Exception
      */
     public static function getInstance() : self {
         if ( static::$instance == null ) {

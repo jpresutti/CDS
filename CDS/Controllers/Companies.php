@@ -26,7 +26,7 @@ class Companies extends BaseController
         $companyMapper = new CompanyMapper();
         $company = $companyMapper->getByPrimary($companyId);
         if ( $company == null ) {
-            header('Location:/company.php');
+            header('Location:/companies.php');
             exit;
         }
         View::showView('companyDetail.phtml', ['company' => $company]);

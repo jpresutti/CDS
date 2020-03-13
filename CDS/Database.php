@@ -7,7 +7,11 @@ use PDO;
 class Database {
     private static $instance;
     private PDO $connection;
-    
+
+    /**
+     * Get database connection instance
+     * @return static
+     */
     public static function getInstance() : self {
         if ( static::$instance == null ) {
             static::$instance = new self();
@@ -15,7 +19,12 @@ class Database {
         }
         return static::$instance;
     }
-    
+
+    /**
+     * Connect to database based on config settings
+     * @return bool
+     * @throws \Exception
+     */
     public function connect() : bool {
         $config = Config::getInstance();
         $connectionString = $config->getSetting('Database.connection_string');
@@ -31,7 +40,11 @@ class Database {
         }
         return true;
     }
-    
+
+    /**
+     * Get PDO Object
+     * @return PDO
+     */
     public function getConnection() : PDO {
         return $this->connection;
     }
